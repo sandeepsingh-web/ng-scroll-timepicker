@@ -1,0 +1,149 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+
+      <h1 class="text-center mb-1 fw-bold">ng-scroll-timepicker</h1>
+      <p class="text-center text-muted mb-5">Scroll-based Angular time picker · Bootstrap 5</p>
+
+      <!-- ── Controls ──────────────────────────────────────────────────── -->
+      <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap">
+        <button class="btn btn-sm" [class.btn-primary]="format === '12h'" [class.btn-outline-secondary]="format !== '12h'"
+                (click)="onFormatChange('12h')">12h</button>
+        <button class="btn btn-sm" [class.btn-primary]="format === '24h'" [class.btn-outline-secondary]="format !== '24h'"
+                (click)="onFormatChange('24h')">24h</button>
+        <button class="btn btn-sm" [class.btn-primary]="theme === 'light'" [class.btn-outline-secondary]="theme !== 'light'"
+                (click)="theme = 'light'">Light</button>
+        <button class="btn btn-sm" [class.btn-primary]="theme === 'dark'" [class.btn-outline-secondary]="theme !== 'dark'"
+                (click)="theme = 'dark'">Dark</button>
+      </div>
+
+      <!-- ── Demo 1: Default / theme toggle ────────────────────────────── -->
+      <div class="card shadow-sm mb-4" style="border-radius: 20px; border: none;">
+        <div class="card-body p-4">
+          <p class="text-muted fw-semibold text-uppercase mb-4" style="font-size: 0.72rem; letter-spacing: 1px;">
+            theme input + output event
+          </p>
+          <div class="d-flex justify-content-center mb-4">
+            <ng-scroll-timepicker
+              [format]="format"
+              [theme]="theme"
+              [value]="selectedTime"
+              (timeChange)="onTimeChange($event)">
+            </ng-scroll-timepicker>
+          </div>
+          <div class="text-center">
+            <span class="badge bg-light text-dark fs-6 px-3 py-2 rounded-pill border">
+              {{ selectedTime }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Demo 2: Custom config ──────────────────────────────────────── -->
+      <div class="card shadow-sm mb-4" style="border-radius: 20px; border: none;">
+        <div class="card-body p-4">
+          <p class="text-muted fw-semibold text-uppercase mb-4" style="font-size: 0.72rem; letter-spacing: 1px;">
+            [config] — larger rows, bolder opacity
+          </p>
+          <div class="d-flex justify-content-center mb-4">
+            <ng-scroll-timepicker
+              [format]="format"
+              [theme]="theme"
+              [config]="{ itemHeight: 56, visibleItems: 5, fontSizeSelected: 26, fontSizeNear: 20, fontSizeFar: 16, opacityNear: 0.6, opacityFar: 0.3 }"
+              value="03:15 pm"
+              (timeChange)="onTimeChange($event)">
+            </ng-scroll-timepicker>
+          </div>
+          <div class="text-center">
+            <code class="text-muted" style="font-size: 0.78rem;">
+              itemHeight: 56 · fontSizeSelected: 26 · opacityNear: 0.6
+            </code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Demo 3: CSS variable theming ──────────────────────────────── -->
+      <div class="card shadow-sm mb-4" style="border-radius: 20px; border: none;">
+        <div class="card-body p-4">
+          <p class="text-muted fw-semibold text-uppercase mb-4" style="font-size: 0.72rem; letter-spacing: 1px;">
+            CSS custom properties (indigo accent)
+          </p>
+          <div class="d-flex justify-content-center mb-4">
+            <ng-scroll-timepicker
+              [format]="format"
+              value="11:30 am"
+              style="
+                --tp-bg: #eef2ff;
+                --tp-selection-bg: rgba(99,102,241,0.18);
+                --tp-text-color: #1e1b4b;
+                --tp-separator-color: #6366f1;
+                --tp-picker-radius: 20px;
+                --tp-selection-radius: 10px;
+              ">
+            </ng-scroll-timepicker>
+          </div>
+          <div class="text-center">
+            <code class="text-muted" style="font-size: 0.78rem;">
+              --tp-bg · --tp-selection-bg · --tp-text-color · --tp-separator-color
+            </code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Demo 4: Reactive form ──────────────────────────────────────── -->
+      <div class="card shadow-sm mb-4" style="border-radius: 20px; border: none;">
+        <div class="card-body p-4">
+          <p class="text-muted fw-semibold text-uppercase mb-4" style="font-size: 0.72rem; letter-spacing: 1px;">
+            Reactive Form (ControlValueAccessor)
+          </p>
+          <div class="d-flex justify-content-center mb-4">
+            <ng-scroll-timepicker
+              [format]="format"
+              [theme]="theme"
+              [formControl]="timeControl">
+            </ng-scroll-timepicker>
+          </div>
+          <div class="text-center">
+            <span class="badge bg-light text-dark fs-6 px-3 py-2 rounded-pill border">
+              form value: <strong>{{ timeControl.value }}</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── API reference ─────────────────────────────────────────────── -->
+      <div class="card bg-dark text-white mb-0" style="border-radius: 16px;">
+        <div class="card-body p-4">
+          <pre class="mb-0" style="font-size: 0.8rem; line-height: 1.7;"><code><!-- Inputs -->
+format   : '12h' | '24h'      default: '12h'
+theme    : 'light' | 'dark'   default: 'light'
+value    : string             e.g. "09:45 am" / "14:30"
+config   : TimepickerConfig   partial — override any field
+
+<!-- TimepickerConfig fields -->
+itemHeight       number   48    row height in px
+visibleItems     number   5     visible rows
+fontSizeSelected number   22    center item font-size
+fontSizeNear     number   18    ±1 font-size
+fontSizeFar      number   15    ±2+ font-size
+opacityNear      number   0.45  ±1 opacity
+opacityFar       number   0.2   ±2 opacity
+opacityHidden    number   0.08  ±3+ opacity
+
+<!-- CSS custom properties (override on the element) -->
+--tp-bg                  picker background
+--tp-selection-bg        highlight fill
+--tp-selection-radius    highlight border-radius
+--tp-picker-radius       outer border-radius
+--tp-picker-padding      inner padding
+--tp-text-color          item text color
+--tp-separator-color     colon color
+
+<!-- Output -->
+(timeChange)  EventEmitter&lt;string&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
