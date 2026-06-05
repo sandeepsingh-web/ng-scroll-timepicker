@@ -3,6 +3,7 @@
 A smooth, scroll-based time picker Angular component with Bootstrap 5 styling.
 Supports 12h / 24h formats, reactive forms, and touch/mouse/keyboard scroll.
 
+live demo : https://timepicker-dbb38.web.app/
 ## Install
 
 ```bash
