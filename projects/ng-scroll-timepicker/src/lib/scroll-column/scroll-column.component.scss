@@ -1,0 +1,40 @@
+.tp-scroll-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tp-scroll-container {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tp-spacer {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.tp-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.08s ease, font-size 0.08s ease;
+  letter-spacing: 0.01em;
+  color: var(--tp-text-color, #1a1a1a);
+  min-width: 56px;
+  padding: 0 4px;
+
+  &:hover {
+    opacity: 1 !important;
+  }
+}

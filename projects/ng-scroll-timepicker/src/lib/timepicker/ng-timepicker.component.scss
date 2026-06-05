@@ -1,0 +1,98 @@
+// ─── CSS Custom Properties ────────────────────────────────────────────────────
+// Override any of these on the host element to theme the picker:
+//
+//   ng-scroll-timepicker {
+//     --tp-bg: #f0f0f5;
+//     --tp-selection-bg: rgba(99, 102, 241, 0.15);
+//     --tp-text-color: #1a1a2e;
+//   }
+// ─────────────────────────────────────────────────────────────────────────────
+
+:host {
+  display: inline-block;
+
+  // Background & surface
+  --tp-bg:                  #ffffff;
+  --tp-selection-bg:        rgba(0, 0, 0, 0.055);
+
+  // Radii & spacing
+  --tp-picker-radius:       16px;
+  --tp-picker-padding:      8px 12px;
+  --tp-selection-radius:    12px;
+
+  // Text
+  --tp-text-color:          #1a1a1a;
+  --tp-separator-color:     #1a1a1a;
+
+  // Runtime value injected by the component via [ngStyle]
+  // Do NOT set this manually — it mirrors config.itemHeight
+  --tp-item-height:         48px;
+}
+
+// ── Light theme (default) ──────────────────────────────────────────────────
+
+.tp-root {
+  position: relative;
+  display: inline-flex;
+  background: var(--tp-bg);
+  border-radius: var(--tp-picker-radius);
+  padding: var(--tp-picker-padding);
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+// ── Dark theme preset ──────────────────────────────────────────────────────
+
+.tp-root.tp-dark {
+  --tp-bg:             #1c1c1e;
+  --tp-selection-bg:   rgba(255, 255, 255, 0.12);
+  --tp-text-color:     #f5f5f7;
+  --tp-separator-color: #f5f5f7;
+}
+
+// ── Selection highlight ────────────────────────────────────────────────────
+
+.tp-selection-box {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: var(--tp-item-height);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--tp-selection-bg);
+  border-radius: var(--tp-selection-radius);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.2s ease;
+}
+
+// ── Column layout ──────────────────────────────────────────────────────────
+
+.tp-columns {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.tp-separator {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--tp-separator-color);
+  padding: 0 4px;
+  line-height: var(--tp-item-height);
+  transition: color 0.2s ease;
+}
+
+// ── Column width overrides via host projection ─────────────────────────────
+
+:host ::ng-deep {
+  .tp-col-number tp-scroll-column .tp-item {
+    min-width: 52px;
+  }
+
+  .tp-col-period tp-scroll-column .tp-item {
+    min-width: 46px;
+    text-transform: lowercase;
+  }
+}
